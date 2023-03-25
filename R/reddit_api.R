@@ -24,17 +24,17 @@ rstats_tbl %>% ggplot(aes(x = upvotes, y = comments)) +
 (cor_upvote_comment = cor.test(x = rstats_tbl$upvotes, y = rstats_tbl$comments))
 
 # Publication 
-## The correlation betweeen upvotes and comments was r(23) = .41, p = .04. This test was significant.
+## The correlation betweeen upvotes and comments was r(23) = .43, p = .03. This test was statistically significant.
 
 ## Removing leading zeroes in output and rounding 
 cor_output = tibble(df = cor_upvote_comment$parameter, 
                     estimate = round(cor_upvote_comment$estimate, digits = 2),
                     pval = round(cor_upvote_comment$p.value, digits = 2)) %>% 
-  mutate(across(-df, str_replace_all, pattern = "^0", replacement = ""))
+  mutate(across(-df, ~ str_replace_all(.x, pattern = "^0", replacement = "")))
 sig_flag = ifelse(cor_output$pval <= .05, " ", " not") 
 
 ## Constructing the outputted line of text dynamically
 paste0("The correlation betweeen upvotes and comments was r(",
        cor_output$df, ") = ", cor_output$estimate, ", p = ", cor_output$pval,
-       ". This test was", sig_flag, " statistically significant.")
+       ". This test was", sig_flag, "statistically significant.")
 
