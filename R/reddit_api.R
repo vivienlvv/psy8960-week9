@@ -31,12 +31,13 @@ rstats_tbl %>% ggplot(aes(x = upvotes, y = comments)) +
 
 # Analysis 
 ## cor.test() displays correlation statistic and p-value
-(cor_upvote_comment = cor.test(x = rstats_tbl$upvotes, y = rstats_tbl$comments))
-
+cor_upvote_comment = cor.test(x = rstats_tbl$upvotes, y = rstats_tbl$comments)
+cor_upvote_comment$estimate
+cor_upvote_comment$p.value
 
 
 # Publication 
-## The correlation betweeen upvotes and comments was r(23) = .17, p = .41. This test was not statistically significant.
+## The correlation betweeen upvotes and comments was r(23) = .16, p = .43. This test was not statistically significant.
 
 ## Cleaning correlation output (i.e., rounding & removing leading zeroes) to output required text
 cor_output = tibble(df = cor_upvote_comment$parameter, 
