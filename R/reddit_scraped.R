@@ -5,8 +5,8 @@ library(rvest)
 options(scipen = 999)
 
 # Data Import and Cleaning
-rstats_html = read_html("https://old.reddit.com/r/rstats/")
 
+rstats_html = read_html("https://old.reddit.com/r/rstats/")
 
 ## Generating xpaths for the three variables
 xpath_post = "//div[contains(@class, 'odd') or contains(@class, 'even')]//a[contains(@class, 'title may-blank')]"
@@ -27,6 +27,8 @@ comments = html_elements(rstats_html, xpath = xpath_comments) %>%
 ## Creating required variable rstats_tbl 
 rstats_tbl = tibble(post, upvotes, comments)
 
+
+
 # Visualization
 rstats_tbl %>% ggplot(aes(x = upvotes, y = comments)) + 
   geom_point() + 
@@ -34,10 +36,14 @@ rstats_tbl %>% ggplot(aes(x = upvotes, y = comments)) +
        y = "No. of Comments",
        title = "Relationship between Upvotes and Comments")
 
+
+
 # Analysis 
 cor_upvote_comment2 = cor.test(x = rstats_tbl$upvotes, y = rstats_tbl$comments)
 cor_upvote_comment2$estimate
 cor_upvote_comment2$p.value
+
+
 
 # Publication 
 ## The correlation betweeen upvotes and comments was r(21) = .15, p = .49. This test was not statistically significant.
@@ -53,6 +59,4 @@ cor_output2 = tibble(df = cor_upvote_comment2$parameter,
 paste0("The correlation betweeen upvotes and comments was r(",
        cor_output2$df, ") = ", cor_output2$estimate, ", p = ", cor_output2$pval,
        ". This test was", cor_output2$sig_flag, "statistically significant.")
-
-
 
