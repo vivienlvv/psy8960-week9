@@ -2,7 +2,8 @@
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 library(tidyverse)
 library(jsonlite)
-options(scipen = 999) # 
+## Making sure small p-values are not displayed in scientific notation
+options(scipen = 999) 
 
 # Data Import and Cleaning
 
