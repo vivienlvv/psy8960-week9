@@ -23,7 +23,7 @@ rstats_tbl = rstats_original_tbl %>%
 
 # Visualization
 rstats_tbl %>% ggplot(aes(x = upvotes, y = comments)) + 
-  geom_point() + 
+  geom_point(method = "lm") +  # added in linn
   labs(x = "No. of Upvotes", 
        y = "No. of Comments",
        title = "Relationship between Upvotes and Comments")
@@ -49,6 +49,25 @@ cor_output = tibble(df = cor_upvote_comment$parameter,
          
 ## Constructing the outputted line of text dynamically
 paste0("The correlation betweeen upvotes and comments was r(",
-       cor_output$df, ") = ", cor_output$estimate, ", p = ", cor_output$pval,
-       ". This test was", cor_output$sig_flag, "statistically significant.")
+       cor_output$df, 
+       ") = ", 
+       cor_output$estimate,
+       ", p = ",
+       cor_output$pval,
+       ". This test was",
+       cor_output$sig_flag,
+       "statistically significant.")
 
+
+
+# Notes:
+## It is common for html and json files for not conform to dfs because
+## flatten: changing structure. The dataframe has been collapsed, kind variable is ditributed among all the cases. 
+## You can also pull upvotes and downvotes!!!
+
+## sprintf allows formatting: can suppress leading zeroes
+### sprintf("r(%d)=%2f", 24, .08), f stands for fixedpoint decimal notation
+## format(round(estimate, 2), nsmall = 2) --> This is what I need! 
+## Removing str_remove("0.012", "^\\d")
+
+## Should split line if it passes the grey line (standard terminal width)
